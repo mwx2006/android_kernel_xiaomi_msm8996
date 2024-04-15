@@ -217,6 +217,7 @@ static ssize_t screen_state_get(struct device *dev,
 	return scnprintf(buf, PAGE_SIZE, "%d\n", !f->screen_off);
 }
 
+#if defined(CONFIG_MACH_XIAOMI_A1) || defined(CONFIG_MACH_XIAOMI_A4)
 static ssize_t proximity_state_set(struct device *dev,
 	struct device_attribute *attr, const char *buf, size_t count)
 {
@@ -286,19 +287,28 @@ static ssize_t enable_key_events_show(struct device *dev,
  
  	return count;
 }
+#endif
 
+#if defined(CONFIG_MACH_XIAOMI_A1) || defined(CONFIG_MACH_XIAOMI_A4)
 static DEVICE_ATTR(enable_key_events, S_IWUSR | S_IRUSR, enable_key_events_show, enable_key_events_store);
 static DEVICE_ATTR(enable_wakeup, S_IWUSR | S_IRUSR, enable_wakeup_show, enable_wakeup_store);
+#endif
 static DEVICE_ATTR(irq, S_IRUSR | S_IWUSR, irq_get, irq_ack);
+#if defined(CONFIG_MACH_XIAOMI_A1) || defined(CONFIG_MACH_XIAOMI_A4)
 static DEVICE_ATTR(proximity_state, S_IWUSR, NULL, proximity_state_set);
+#endif
 static DEVICE_ATTR(screen_state, S_IRUSR, screen_state_get, NULL);
 	
 static struct attribute *attributes[] = {
 	&dev_attr_irq.attr,
+#if defined(CONFIG_MACH_XIAOMI_A1) || defined(CONFIG_MACH_XIAOMI_A4)
 	&dev_attr_proximity_state.attr,
+#endif
 	&dev_attr_screen_state.attr,
+#if defined(CONFIG_MACH_XIAOMI_A1) || defined(CONFIG_MACH_XIAOMI_A4)
 	&dev_attr_enable_key_events.attr,
 	&dev_attr_enable_wakeup.attr,
+#endif
 	NULL
 };
 
